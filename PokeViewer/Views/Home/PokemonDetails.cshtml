@@ -1,0 +1,31 @@
+﻿@model Pokemon
+@{
+    ViewData["Title"] = "Pokemon's details";
+}
+
+    <div class="text-center">
+        <h1 class="text-center">Welcome on details of single Pokemon</h1>
+        <p>Paragraph</p>
+    </div>
+
+
+<div class="container">
+    <div class="row">
+        @if (Model is not null)
+        {
+            <div class="col-3" class="card" style="width:20rem">
+                <img class="card-img-top" src="@Model.Sprites.FrontDefault" alt="image" style="width:100%" />
+                <div class="card-body">
+                    <h4 class="card-title">@char.ToUpper(@Model.Name[0])@Model.Name.Substring(1)</h4>
+                    <p class="card-text">
+                        Id: @Model.PokemonId<br>
+                        Height: @Model.Height
+                        Weight: @Model.Weight
+                    </p>
+                    <a href="" class="btn btn-primary">See details!</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
