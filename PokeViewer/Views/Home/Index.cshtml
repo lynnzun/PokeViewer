@@ -29,7 +29,7 @@
         @foreach (var pokemon in Model)
         {
             <div class="card" style="width:20rem;margin:20px 2px 24px 2px">
-                <img class="card-img-top" src="@pokemon.SpritesFront_default" alt="image" style="width:100%" />
+                <img class="card-img-top" src="@pokemon.Sprites.FrontDefault" alt="image" style="width:100%" />
                 <div class="card-body">
                     <h4 class="card-title">Name: @pokemon.Name</h4>
                     <p class="card-text">

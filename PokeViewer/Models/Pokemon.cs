@@ -21,7 +21,7 @@ namespace PokeViewer.Models
         [JsonPropertyName("weight")]
         public int Weight { get; set; }
 
-        [JsonInclude]
-        public string SpritesFront_default { get; set; }
+        [JsonPropertyName("sprites")]
+        public Sprites Sprites { get; set; }
     }
 }

@@ -22,8 +22,17 @@ namespace PokeViewer.Controllers
 
         public IActionResult Index()
         {
+            var Pokemons = new List<Pokemon>();
+
+            
+            for (int i = 1; i <= 6; i++)
+            {
+                var Pokemon = GetPokemonsFromAPIAsync(i).Result;
+                Pokemons.Add(Pokemon);
+            }
+            
             //var Pokemons = GetPokemonsFromMemory();
-            var Pokemons = GetPokemonsFromAPIAsync().Result;
+            
             return View(Pokemons);
         }
 
@@ -36,27 +45,23 @@ namespace PokeViewer.Controllers
             return Pokemons;
         }
 
-        private async Task<object> GetPokemonsFromAPIAsync()
+        private async Task<Pokemon> GetPokemonsFromAPIAsync(int id)
         {
-            var Pokemons = new List<Pokemon>();
+            var pokemon = new Pokemon();
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://pokeapi.co/api/v2/pokemon/151")
+                RequestUri = new Uri("https://pokeapi.co/api/v2/pokemon/"+id.ToString())
             };
 
             using (var response = await client.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
-                var pokemon = new Pokemon();
-
-
                 pokemon = JsonSerializer.Deserialize<Pokemon>(body);
-                Pokemons.Add(pokemon);
             }
-            return Pokemons;
+            return pokemon;
         }
 
         public IActionResult Privacy()
