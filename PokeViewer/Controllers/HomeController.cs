@@ -20,22 +20,6 @@ namespace PokeViewer.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            var Pokemons = new List<Pokemon>();
-
-            
-            for (int i = 1; i <= 6; i++)
-            {
-                var Pokemon = GetPokemonsFromAPIAsync(i).Result;
-                Pokemons.Add(Pokemon);
-            }
-            
-            //var Pokemons = GetPokemonsFromMemory();
-            
-            return View(Pokemons);
-        }
-
         private object GetPokemonsFromMemory()
         {
             var Pokemons = new List<Pokemon>();
@@ -64,12 +48,41 @@ namespace PokeViewer.Controllers
             return pokemon;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+        public IActionResult Pokemons()
+        {
+            var Pokemons = new List<Pokemon>();
+
+
+                for (int i = 1; i <= 6; i++)
+                {
+                    var Pokemon = GetPokemonsFromAPIAsync(i).Result;
+                    Pokemons.Add(Pokemon);
+                }
+
+            //var Pokemons = GetPokemonsFromMemory();
+
+            return View(Pokemons);
+        }
+
+        public IActionResult PokemonDetails(int? id)
+        {
+            var Pokemon = GetPokemonsFromAPIAsync(id.Value).Result; // nullable int to int conversion
+
+            return View(Pokemon);
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

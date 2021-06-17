@@ -1,47 +1,8 @@
-﻿@model List<Pokemon>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-@*<div>
-    <ul class="list-group">
-        @foreach (var pokemon in Model)
-        {
-        <li class="list-group-item">
-            Name: @pokemon.Name
-            Id: @pokemon.PokemonId
-            Height: @pokemon.Height
-            Weight: @pokemon.Weight
-        </li>
-        }
-    </ul>
-</div>*@
-
-<div class="row">
-
-    @if (Model is not null)
-    {
-        @foreach (var pokemon in Model)
-        {
-            <div class="card" style="width:20rem;margin:20px 2px 24px 2px">
-                <img class="card-img-top" src="@pokemon.Sprites.FrontDefault" alt="image" style="width:100%" />
-                <div class="card-body">
-                    <h4 class="card-title">Name: @pokemon.Name</h4>
-                    <p class="card-text">
-                        Id: @pokemon.PokemonId
-                        Height: @pokemon.Height
-                        Weight: @pokemon.Weight
-                    </p>
-                    <a href="" class="btn btn-primary">See details!</a>
-                </div>
-            </div>
-        }
-
-    }
-
 </div>
