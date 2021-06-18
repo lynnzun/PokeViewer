@@ -13,8 +13,8 @@
     <div class="row">
         @if (Model is not null)
         {
-            <div class="col-3" class="card" style="width:20rem">
-                <img class="card-img-top" src="@Model.Sprites.FrontDefault" alt="image" style="width:100%" />
+            <div class="col-3" style="width:20rem">
+                <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(Model.PokemonId).png" alt="image" style="width:100%" />
                 <div class="card-body">
                     <h4 class="card-title">@char.ToUpper(@Model.Name[0])@Model.Name.Substring(1)</h4>
                     <p class="card-text">

@@ -3,42 +3,31 @@
     ViewData["Title"] = "List of Pokemons";
 }
 
-    <div class="text-center">
-        <h1 class="text-center">Welcome on list of Pokemons</h1>
-        <p>Paragraph</p>
-    </div>
-
-    @*<div>
-            <ul class="list-group">
-                @foreach (var pokemon in Model)
-                {
-                <li class="list-group-item">
-                    Name: @pokemon.Name
-                    Id: @pokemon.PokemonId
-                    Height: @pokemon.Height
-                    Weight: @pokemon.Weight
-                </li>
-                }
-            </ul>
-        </div>*@
-
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="search-addon">
-            <button class="btn btn-sm"><i class="bi-search"></i></button>
-        </span>
-    </div>
+<div class="text-center">
+    <h1 class="text-center">Welcome on list of Pokemons</h1>
+    <p>Paragraph</p>
 </div>
 
-<div class="container">
-    <div class="row">
-        @if (Model is not null)
-        {
+<div>
+    <form id="search-form" method="get">
+        <div class="input-group">
+            <input type="search" name="searchQuery" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <input type="submit" value="Search" />
+        </div>
+    </form>
+</div>
+
+
+@if (Model is not null)
+{
+    <div class="container">
+        <div class="row">
+
             @foreach (var pokemon in Model)
             {
-                <div class="col-3" class="card" style="width:20rem">
-                    <img class="card-img-top" src="@pokemon.Sprites.FrontDefault" alt="image" style="width:100%" />
+                <div class="col-sm-3">
+                    @*<img class="card-img-top" src="@pokemon.Sprites.FrontDefault" alt="image" style="width:100%" />*@
+                    <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(pokemon.PokemonId).png" alt="image" style="width:100%" />
                     <div class="card-body">
                         <h4 class="card-title">@char.ToUpper(pokemon.Name[0])@pokemon.Name.Substring(1)</h4>
                         <p class="card-text">
@@ -46,11 +35,11 @@
                             Height: @pokemon.Height
                             Weight: @pokemon.Weight
                         </p>
-                        <a href="@Url.Action("PokemonDetails","Home")/@pokemon.PokemonId" class="btn btn-primary">See details!</a>
+                        <a href="@Url.Action("PokemonDetails", "Home")/@pokemon.PokemonId" class="btn btn-primary">See details!</a>
                     </div>
                 </div>
             }
-        }
+            
+        </div>
     </div>
-</div>
-
+}

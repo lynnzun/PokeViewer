@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using PokeViewer.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace PokeViewer.Models
         public int PokemonId { get; set; }
 
         [JsonPropertyName("name")]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [JsonPropertyName("height")]
@@ -22,6 +25,7 @@ namespace PokeViewer.Models
         public int Weight { get; set; }
 
         [JsonPropertyName("sprites")]
+        [NotMapped]
         public Sprites Sprites { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using PokeViewer.DAL;
 
 namespace PokeViewer.Controllers
 {
@@ -45,6 +46,30 @@ namespace PokeViewer.Controllers
                 var body = await response.Content.ReadAsStringAsync();
                 pokemon = JsonSerializer.Deserialize<Pokemon>(body);
             }
+
+            // Save to DB part
+
+/*            PokeViewerContext db = new PokeViewerContext();
+            db.Pokemons.Add(pokemon);
+            db.SaveChanges();*/
+
+            return pokemon;
+        }
+
+        private List<Pokemon> GetPokemonsFromDB()
+        {
+            var pokemons = new List<Pokemon>();
+            PokeViewerContext db = new PokeViewerContext();
+            pokemons = db.Pokemons.ToList();
+
+            return pokemons;
+        }
+        private Pokemon GetPokemonFromDB(int id)
+        {
+            var pokemon = new Pokemon();
+            PokeViewerContext db = new PokeViewerContext();
+            pokemon = db.Pokemons.Find(id);
+
             return pokemon;
         }
 
@@ -55,32 +80,38 @@ namespace PokeViewer.Controllers
 
         public IActionResult Privacy()
         {
+            var pokemons = GetPokemonsFromDB();
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
-        public IActionResult Pokemons()
+        public IActionResult Pokemons(string searchQuery = null)
         {
-            var Pokemons = new List<Pokemon>();
+           var pokemons = new List<Pokemon>();
 
-
-            for (int i = 1; i <= 6; i++)
+            if (searchQuery != null)
             {
-                var Pokemon = GetPokemonsFromAPIAsync(i).Result;
-                Pokemons.Add(Pokemon);
+                pokemons = GetPokemonsFromDB().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
+
+                return View(pokemons);
+            }
+            else
+            {
+                pokemons = GetPokemonsFromDB();
             }
 
             //var Pokemons = GetPokemonsFromMemory();
 
-            return View(Pokemons);
+            return View(pokemons);
         }
 
         public IActionResult PokemonDetails(int? id)
         {
-            var Pokemon = GetPokemonsFromAPIAsync(id.Value).Result; // nullable int to int conversion
+            //var Pokemon = GetPokemonsFromAPIAsync(id.Value).Result; // nullable int to int conversion
+            var pokemon = GetPokemonFromDB(id.Value); // nullable int to int conversion
 
-            return View(Pokemon);
+            return View(pokemon);
         }
 
         public IActionResult Error()
