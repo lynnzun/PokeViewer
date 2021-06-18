@@ -82,7 +82,6 @@ namespace PokeViewer.Controllers
 
         public IActionResult Privacy()
         {
-            var pokemons = GetPokemonsFromDB();
             return View();
         }
 
