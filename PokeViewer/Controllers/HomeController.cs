@@ -49,7 +49,7 @@ namespace PokeViewer.Controllers
 
             // Save to DB part
 
-/*            PokeViewerContext db = new PokeViewerContext();
+/*          PokeViewerContext db = new PokeViewerContext();
             db.Pokemons.Add(pokemon);
             db.SaveChanges();*/
 
@@ -75,6 +75,8 @@ namespace PokeViewer.Controllers
 
         public IActionResult Index()
         {
+            
+
             return View();
         }
 
