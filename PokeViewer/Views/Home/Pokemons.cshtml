@@ -35,7 +35,7 @@
                             Height: @pokemon.Height
                             Weight: @pokemon.Weight
                         </p>
-                        <a href="@Url.Action("PokemonDetails", "Home")/@pokemon.PokemonId" class="btn btn-primary">See details!</a>
+                        <a href="@Url.Action("PokemonDetails", "Home",new { id = pokemon.PokemonId })" class="btn btn-primary">See details!</a>
                     </div>
                 </div>
             }
