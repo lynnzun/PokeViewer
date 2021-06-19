@@ -11,22 +11,18 @@
         }
     }
 
-    <form id="adopt-form">
-        <div class="input-group">
-            <label>Your name: </label>
+    <form id="adopt-form" method="post">
+        <div class="input-group row">
+            <label class="col-sm-3">Your name: </label>
             <input type="text" name="ownerName" class="form-control rounded" />
         </div>
-        <div class="input-group">
-            <label>Pokemon's nickname: </label>
+        <div class="input-group row">
+            <label class="col-sm-3">Pokemon's nickname: </label>
             <input type="text" name="personalName" class="form-control rounded" />
         </div>
-        <div class="input-group">
-            <label>Pokemon Id: </label>
-
+        <div class="input-group row">
+            <label class="col-sm-3">Pokemon Id: </label>
             <input type="text" name="pokemonId" class="form-control rounded" value="@Model.PokemonId" @(Model.PokemonId==0 ?"":"readonly")/>
-            
-
-
         </div>
         <input type="submit" value="Adopt!" asp-controller="Favourites" asp-action="AddFavourite" />
     </form>

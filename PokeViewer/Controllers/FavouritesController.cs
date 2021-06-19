@@ -26,6 +26,8 @@ namespace PokeViewer.Controllers
             return Redirect(Url.Action("Error","Home"));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddFavourite(string ownerName, string personalName, int pokemonId)
         {
             var petPokemon = new FavouritesPokemon
@@ -43,12 +45,20 @@ namespace PokeViewer.Controllers
             return Redirect("FavouritesPokemon");
         }
 
-        public IActionResult FavouritesPokemon()
+        public IActionResult FavouritesPokemon(string searchQuery = null)
         {
-            var favouritesPokemons = dbCon.GetPokemonsFromFavouriteDB();
-           
+            var favouritesPokemons = new List<FavouritesPokemon>();
 
-            return View(favouritesPokemons);
+            if (searchQuery != null)
+            {
+                favouritesPokemons = dbCon.GetPokemonsFromFavouriteDB().Where(p => p.FavouritePokemon.Name.Contains(searchQuery) || p.FavouritePokemon.PokemonId.ToString().Equals(searchQuery)).ToList();
+            }
+            else
+            {
+                favouritesPokemons = dbCon.GetPokemonsFromFavouriteDB();
+            }
+
+                return View(favouritesPokemons);
         }
     }
 }

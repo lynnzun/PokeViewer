@@ -9,6 +9,7 @@ namespace PokeViewer.Models
     public class DatabaseConnections
     {
         PokeViewerContext db = new PokeViewerContext();
+
         public List<Pokemon> GetPokemonsFromDB()
         {
             var pokemons = new List<Pokemon>();
@@ -38,7 +39,6 @@ namespace PokeViewer.Models
         {
             try
             {
-                //PokeViewerContext db = new PokeViewerContext();
                 db.FavouritesPokemons.Add(pokemon);
                 db.SaveChanges();
             }

@@ -25,11 +25,11 @@ namespace PokeViewer.Controllers
 
         private object GetPokemonsFromMemory()
         {
-            var Pokemons = new List<Pokemon>();
-            Pokemons.Add(new Pokemon { PokemonId = 0, Name = "Nazwa", Height = 5, Weight = 10 });
-            Pokemons.Add(new Pokemon { PokemonId = 152, Name = "Nowa nazwa", Height = 4, Weight = 12 });
+            var pokemons = new List<Pokemon>();
+            pokemons.Add(new Pokemon { PokemonId = 0, Name = "Nazwa", Height = 5, Weight = 10 });
+            pokemons.Add(new Pokemon { PokemonId = 152, Name = "Nowa nazwa", Height = 4, Weight = 12 });
 
-            return Pokemons;
+            return pokemons;
         }
 
         private async Task<Pokemon> GetPokemonsFromAPIAsync(int id)
@@ -58,13 +58,8 @@ namespace PokeViewer.Controllers
             return pokemon;
         }
 
-
-
-
         public IActionResult Index()
         {
-            
-
             return View();
         }
 
@@ -90,14 +85,11 @@ namespace PokeViewer.Controllers
                 pokemons = dbCon.GetPokemonsFromDB();
             }
 
-            //var Pokemons = GetPokemonsFromMemory();
-
             return View(pokemons);
         }
 
         public IActionResult PokemonDetails(int? id)
         {
-            //var Pokemon = GetPokemonsFromAPIAsync(id.Value).Result; // nullable int to int conversion
             var pokemon = dbCon.GetPokemonFromDB(id.Value); // nullable int to int conversion
 
             return View(pokemon);
