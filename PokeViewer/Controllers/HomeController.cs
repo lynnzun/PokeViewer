@@ -56,22 +56,8 @@ namespace PokeViewer.Controllers
             return pokemon;
         }
 
-        private List<Pokemon> GetPokemonsFromDB()
-        {
-            var pokemons = new List<Pokemon>();
-            PokeViewerContext db = new PokeViewerContext();
-            pokemons = db.Pokemons.ToList();
 
-            return pokemons;
-        }
-        private Pokemon GetPokemonFromDB(int id)
-        {
-            var pokemon = new Pokemon();
-            PokeViewerContext db = new PokeViewerContext();
-            pokemon = db.Pokemons.Find(id);
 
-            return pokemon;
-        }
 
         public IActionResult Index()
         {
@@ -93,13 +79,13 @@ namespace PokeViewer.Controllers
 
             if (searchQuery != null)
             {
-                pokemons = GetPokemonsFromDB().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
+                pokemons = DatabaseConnections.GetPokemonsFromDB().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
 
                 return View(pokemons);
             }
             else
             {
-                pokemons = GetPokemonsFromDB();
+                pokemons = DatabaseConnections.GetPokemonsFromDB();
             }
 
             //var Pokemons = GetPokemonsFromMemory();
@@ -110,7 +96,7 @@ namespace PokeViewer.Controllers
         public IActionResult PokemonDetails(int? id)
         {
             //var Pokemon = GetPokemonsFromAPIAsync(id.Value).Result; // nullable int to int conversion
-            var pokemon = GetPokemonFromDB(id.Value); // nullable int to int conversion
+            var pokemon = DatabaseConnections.GetPokemonFromDB(id.Value); // nullable int to int conversion
 
             return View(pokemon);
         }
