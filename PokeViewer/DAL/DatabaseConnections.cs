@@ -26,6 +26,20 @@ namespace PokeViewer.Models
             return pokemon;
         }
 
+        public static bool SaveFavouritePokemonToDB(FavouritesPokemon pokemon)
+        {
+            try
+            {
+                PokeViewerContext db = new PokeViewerContext();
+                db.FavouritesPokemons.Add(pokemon);
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return false;
+            }
 
+            return true;
+        }
     }
 }
