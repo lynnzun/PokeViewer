@@ -34,6 +34,11 @@ namespace PokeViewer.Controllers
                 PokemonId = pokemonId,
                 FavouritePokemon = DatabaseConnections.GetPokemonFromDB(pokemonId)
             };
+            if(petPokemon != null)
+            {
+                DatabaseConnections.SaveFavouritePokemonToDB(petPokemon);
+            }
+            
             return petPokemon;
         }
     }
