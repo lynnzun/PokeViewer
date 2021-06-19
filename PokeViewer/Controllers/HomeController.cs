@@ -14,6 +14,8 @@ namespace PokeViewer.Controllers
 {
     public class HomeController : Controller
     {
+        private DatabaseConnections dbCon = new DatabaseConnections();
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -79,13 +81,13 @@ namespace PokeViewer.Controllers
 
             if (searchQuery != null)
             {
-                pokemons = DatabaseConnections.GetPokemonsFromDB().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
+                pokemons = dbCon.GetPokemonsFromDB().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
 
                 return View(pokemons);
             }
             else
             {
-                pokemons = DatabaseConnections.GetPokemonsFromDB();
+                pokemons = dbCon.GetPokemonsFromDB();
             }
 
             //var Pokemons = GetPokemonsFromMemory();
@@ -96,7 +98,7 @@ namespace PokeViewer.Controllers
         public IActionResult PokemonDetails(int? id)
         {
             //var Pokemon = GetPokemonsFromAPIAsync(id.Value).Result; // nullable int to int conversion
-            var pokemon = DatabaseConnections.GetPokemonFromDB(id.Value); // nullable int to int conversion
+            var pokemon = dbCon.GetPokemonFromDB(id.Value); // nullable int to int conversion
 
             return View(pokemon);
         }

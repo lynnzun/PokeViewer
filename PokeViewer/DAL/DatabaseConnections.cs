@@ -6,21 +6,21 @@ using PokeViewer.DAL;
 
 namespace PokeViewer.Models
 {
-    public static class DatabaseConnections
+    public class DatabaseConnections
     {
-
-        public static List<Pokemon> GetPokemonsFromDB()
+        PokeViewerContext db = new PokeViewerContext();
+        public List<Pokemon> GetPokemonsFromDB()
         {
             var pokemons = new List<Pokemon>();
-            PokeViewerContext db = new PokeViewerContext();
+            //PokeViewerContext db = new PokeViewerContext();
             pokemons = db.Pokemons.ToList();
 
             return pokemons;
         }
-        public static Pokemon GetPokemonFromDB(int id)
+        public Pokemon GetPokemonFromDB(int id)
         {
             var pokemon = new Pokemon();
-            PokeViewerContext db = new PokeViewerContext();
+            //PokeViewerContext db = new PokeViewerContext();
             pokemon = db.Pokemons.Find(id);
 
             return pokemon;
