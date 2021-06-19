@@ -3,7 +3,14 @@
     ViewData["Title"] = "Favourites";
 }
 <div>
-    <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(Model.PokemonId).png" alt="image" style="width:100%" />
+
+    @{
+        if (Model.PokemonId != 0)
+        {
+            <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(Model.PokemonId).png" alt="image" style="width:400px;height:400px" />
+        }
+    }
+
     <form id="adopt-form">
         <div class="input-group">
             <label>Your name: </label>
@@ -15,7 +22,11 @@
         </div>
         <div class="input-group">
             <label>Pokemon Id: </label>
-            <input type="text" name="pokemonId" class="form-control rounded" value="@Model.PokemonId" />
+
+            <input type="text" name="pokemonId" class="form-control rounded" value="@Model.PokemonId" @(Model.PokemonId==0 ?"":"readonly")/>
+            
+
+
         </div>
         <input type="submit" value="Adopt!" asp-controller="Favourites" asp-action="AddFavourite" />
     </form>
