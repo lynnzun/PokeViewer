@@ -23,7 +23,8 @@
                         Weight: @Model.Weight
                     </p>
                     <a href="" class="btn btn-primary">See details!</a>
-                </div>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Favourites" asp-action="Index" asp-route-pokemonId="@Model.PokemonId">FAV</a>
+                </div> 
             </div>
         }
     </div>

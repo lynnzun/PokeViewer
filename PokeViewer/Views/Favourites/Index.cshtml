@@ -1,9 +1,24 @@
-﻿@{
+﻿@model Pokemon
+@{
     ViewData["Title"] = "Favourites";
 }
+<div>
+    <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(Model.PokemonId).png" alt="image" style="width:100%" />
+    <form id="adopt-form">
+        <div class="input-group">
+            <label>Your name: </label>
+            <input type="text" id="ownerName" class="form-control rounded" />
+        </div>
+        <div class="input-group">
+            <label>Pokemon's nickname: </label>
+            <input type="text" id="personalName" class="form-control rounded" />
+        </div>
+        <div class="input-group">
+            <label>Pokemon Id: </label>
+            <input type="text" id="pokemonId" class="form-control rounded" value="@Model.PokemonId" />
+        </div>
+        <input type="submit" value="Adopt!" asp-controller="Favourites" asp-action="AddFavourite" asp-route-id="pokemonId" />
+    </form>
+</div>
 
-<form id="adopt-form">
-    <input type="text" id="ownerName" class="form-control rounded" />
-    <input type="text" id="personalName" class="form-control rounded" />
-    <input type="submit" value="Adopt!" />
-</form>
+
