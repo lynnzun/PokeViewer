@@ -9,12 +9,13 @@ namespace PokeViewer.Controllers
 {
     public class FavouritesController : Controller
     {
+        private DatabaseConnections dbCon = new DatabaseConnections();
         public IActionResult Index(int? pokemonId)
         {
             var pokemon = new Pokemon();
             if (pokemonId != null)
             {
-                pokemon = DatabaseConnections.GetPokemonFromDB(pokemonId.Value);
+                pokemon = dbCon.GetPokemonFromDB(pokemonId.Value);
                 return View(pokemon);
             }
             else
@@ -32,11 +33,11 @@ namespace PokeViewer.Controllers
                 Owner = ownerName,
                 PersonalName = personalName,
                 PokemonId = pokemonId,
-                FavouritePokemon = DatabaseConnections.GetPokemonFromDB(pokemonId)
+                FavouritePokemon = dbCon.GetPokemonFromDB(pokemonId)
             };
             if(petPokemon != null)
             {
-                DatabaseConnections.SaveFavouritePokemonToDB(petPokemon);
+                dbCon.SaveFavouritePokemonToDB(petPokemon);
             }
             
             return petPokemon;
