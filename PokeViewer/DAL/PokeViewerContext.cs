@@ -15,5 +15,6 @@ namespace PokeViewer.DAL
         }
 
         public DbSet<Pokemon> Pokemons { get; set; }
+        public DbSet<FavouritesPokemon> FavouritesPokemons { get; set; }
 }
 }
