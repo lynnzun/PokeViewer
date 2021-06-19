@@ -7,17 +7,17 @@
     <form id="adopt-form">
         <div class="input-group">
             <label>Your name: </label>
-            <input type="text" id="ownerName" class="form-control rounded" />
+            <input type="text" name="ownerName" class="form-control rounded" />
         </div>
         <div class="input-group">
             <label>Pokemon's nickname: </label>
-            <input type="text" id="personalName" class="form-control rounded" />
+            <input type="text" name="personalName" class="form-control rounded" />
         </div>
         <div class="input-group">
             <label>Pokemon Id: </label>
-            <input type="text" id="pokemonId" class="form-control rounded" value="@Model.PokemonId" />
+            <input type="text" name="pokemonId" class="form-control rounded" value="@Model.PokemonId" />
         </div>
-        <input type="submit" value="Adopt!" asp-controller="Favourites" asp-action="AddFavourite" asp-route-id="pokemonId" />
+        <input type="submit" value="Adopt!" asp-controller="Favourites" asp-action="AddFavourite" />
     </form>
 </div>
 
