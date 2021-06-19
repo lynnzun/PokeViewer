@@ -25,10 +25,16 @@ namespace PokeViewer.Controllers
             return Redirect(Url.Action("Error","Home"));
         }
 
-        public Pokemon AddFavourite(int id)
+        public FavouritesPokemon AddFavourite(string ownerName, string personalName, int pokemonId)
         {
-            var pokemon = new Pokemon();
-            return pokemon;
+            var petPokemon = new FavouritesPokemon
+            {
+                Owner = ownerName,
+                PersonalName = personalName,
+                PokemonId = pokemonId,
+                FavouritePokemon = DatabaseConnections.GetPokemonFromDB(pokemonId)
+            };
+            return petPokemon;
         }
     }
 }
