@@ -1,4 +1,4 @@
-﻿@model List<Pokemon>
+﻿@model List<FavouritesPokemon>
 @{
     ViewData["Title"] = "Favourites Pokemons";
 }
@@ -26,20 +26,19 @@
             @foreach (var pokemon in Model)
             {
                 <div class="col-sm-3">
-                    @*<img class="card-img-top" src="@pokemon.Sprites.FrontDefault" alt="image" style="width:100%" />*@
-                    <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(pokemon.PokemonId).png" alt="image" style="width:100%" />
+                    <img class="card-img-top" src="~/Graphics/Sprites/front_default/@(pokemon.FavouritePokemon.PokemonId).png" alt="image" style="width:100%" />
                     <div class="card-body">
-                        <h4 class="card-title">@char.ToUpper(pokemon.Name[0])@pokemon.Name.Substring(1)</h4>
+                        <h4 class="card-title">@char.ToUpper(pokemon.FavouritePokemon.Name[0])@pokemon.FavouritePokemon.Name.Substring(1)</h4>
                         <p class="card-text">
-                            Id: @pokemon.PokemonId<br>
-                            Height: @pokemon.Height
-                            Weight: @pokemon.Weight
+                            Owner name: @pokemon.Owner<br>
+                            Nickname: @pokemon.PersonalName<br>
+                            Id: @pokemon.FavouritePokemon.PokemonId<br>
+                            Height: @pokemon.FavouritePokemon.Height
+                            Weight: @pokemon.FavouritePokemon.Weight
                         </p>
-                        <a href="@Url.Action("PokemonDetails", "Home",new { id = pokemon.PokemonId })" class="btn btn-primary">See details!</a>
                     </div>
                 </div>
             }
-            
         </div>
     </div>
 }

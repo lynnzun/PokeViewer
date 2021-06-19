@@ -12,7 +12,6 @@ namespace PokeViewer.Models
         public List<Pokemon> GetPokemonsFromDB()
         {
             var pokemons = new List<Pokemon>();
-            //PokeViewerContext db = new PokeViewerContext();
             pokemons = db.Pokemons.ToList();
 
             return pokemons;
@@ -20,12 +19,21 @@ namespace PokeViewer.Models
         public Pokemon GetPokemonFromDB(int id)
         {
             var pokemon = new Pokemon();
-            //PokeViewerContext db = new PokeViewerContext();
             pokemon = db.Pokemons.Find(id);
 
             return pokemon;
         }
+        public List<FavouritesPokemon> GetPokemonsFromFavouriteDB()
+        {
+            var pokemons = new List<FavouritesPokemon>();
+            pokemons = db.FavouritesPokemons.ToList();
+            foreach (var pokemon in pokemons)
+            {
+                pokemon.FavouritePokemon = GetPokemonFromDB(pokemon.PokemonId);
+            }
 
+            return pokemons;
+        }
         public bool SaveFavouritePokemonToDB(FavouritesPokemon pokemon)
         {
             try

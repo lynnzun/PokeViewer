@@ -26,7 +26,7 @@ namespace PokeViewer.Controllers
             return Redirect(Url.Action("Error","Home"));
         }
 
-        public FavouritesPokemon AddFavourite(string ownerName, string personalName, int pokemonId)
+        public IActionResult AddFavourite(string ownerName, string personalName, int pokemonId)
         {
             var petPokemon = new FavouritesPokemon
             {
@@ -40,7 +40,15 @@ namespace PokeViewer.Controllers
                 dbCon.SaveFavouritePokemonToDB(petPokemon);
             }
             
-            return petPokemon;
+            return Redirect("FavouritesPokemon");
+        }
+
+        public IActionResult FavouritesPokemon()
+        {
+            var favouritesPokemons = dbCon.GetPokemonsFromFavouriteDB();
+           
+
+            return View(favouritesPokemons);
         }
     }
 }
