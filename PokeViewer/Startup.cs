@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PokeViewer.DAL;
+using PokeViewer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace PokeViewer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSingleton<IPokemonData, PokemonDataFromDatabase>(); // Register specific implementation of IPokemonData - It will be read/write from/to database.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

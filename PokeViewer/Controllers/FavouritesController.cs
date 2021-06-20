@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PokeViewer.DAL;
 using PokeViewer.Models;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,17 @@ namespace PokeViewer.Controllers
 {
     public class FavouritesController : Controller
     {
-        private DatabaseConnections dbCon = new DatabaseConnections();
+        private readonly IPokemonData _pokemonData;
+        public FavouritesController(IPokemonData pokemonData)
+        {
+            _pokemonData = pokemonData;
+        }
         public IActionResult Index(int? pokemonId)
         {
             var pokemon = new Pokemon();
             if (pokemonId != null)
             {
-                pokemon = dbCon.GetPokemonFromDB(pokemonId.Value);
+                pokemon = _pokemonData.GetPokemon(pokemonId.Value);
                 return View(pokemon);
             }
             else
@@ -35,11 +40,11 @@ namespace PokeViewer.Controllers
                 Owner = ownerName,
                 PersonalName = personalName,
                 PokemonId = pokemonId,
-                FavouritePokemon = dbCon.GetPokemonFromDB(pokemonId)
+                FavouritePokemon = _pokemonData.GetPokemon(pokemonId)
             };
             if(petPokemon != null)
             {
-                dbCon.SaveFavouritePokemonToDB(petPokemon);
+                _pokemonData.SaveFavouritePokemon(petPokemon);
             }
             
             return Redirect("FavouritesPokemon");
@@ -51,11 +56,11 @@ namespace PokeViewer.Controllers
 
             if (searchQuery != null)
             {
-                favouritesPokemons = dbCon.GetPokemonsFromFavouriteDB().Where(p => p.FavouritePokemon.Name.Contains(searchQuery) || p.FavouritePokemon.PokemonId.ToString().Equals(searchQuery)).ToList();
+                favouritesPokemons = _pokemonData.GetAllFavouritesPokemons().Where(p => p.FavouritePokemon.Name.Contains(searchQuery) || p.FavouritePokemon.PokemonId.ToString().Equals(searchQuery)).ToList();
             }
             else
             {
-                favouritesPokemons = dbCon.GetPokemonsFromFavouriteDB();
+                favouritesPokemons = _pokemonData.GetAllFavouritesPokemons();
             }
 
                 return View(favouritesPokemons);

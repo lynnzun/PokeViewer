@@ -14,48 +14,14 @@ namespace PokeViewer.Controllers
 {
     public class HomeController : Controller
     {
-        private DatabaseConnections dbCon = new DatabaseConnections();
+        private readonly IPokemonData _pokemonData;
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IPokemonData pokemonData)
         {
             _logger = logger;
-        }
-
-        private object GetPokemonsFromMemory()
-        {
-            var pokemons = new List<Pokemon>();
-            pokemons.Add(new Pokemon { PokemonId = 0, Name = "Nazwa", Height = 5, Weight = 10 });
-            pokemons.Add(new Pokemon { PokemonId = 152, Name = "Nowa nazwa", Height = 4, Weight = 12 });
-
-            return pokemons;
-        }
-
-        private async Task<Pokemon> GetPokemonsFromAPIAsync(int id)
-        {
-            var pokemon = new Pokemon();
-            var client = new HttpClient();
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri("https://pokeapi.co/api/v2/pokemon/" + id.ToString())
-            };
-
-            using (var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                pokemon = JsonSerializer.Deserialize<Pokemon>(body);
-            }
-
-            // Save to DB part
-
-/*          PokeViewerContext db = new PokeViewerContext();
-            db.Pokemons.Add(pokemon);
-            db.SaveChanges();*/
-
-            return pokemon;
+            _pokemonData = pokemonData;
         }
 
         public IActionResult Index()
@@ -72,17 +38,17 @@ namespace PokeViewer.Controllers
 
         public IActionResult Pokemons(string searchQuery = null)
         {
-           var pokemons = new List<Pokemon>();
+            var pokemons = new List<Pokemon>();
 
             if (searchQuery != null)
             {
-                pokemons = dbCon.GetPokemonsFromDB().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
+                pokemons = _pokemonData.GetAllPokemons().Where(p => p.Name.Contains(searchQuery) || p.PokemonId.ToString().Equals(searchQuery)).ToList();
 
                 return View(pokemons);
             }
             else
             {
-                pokemons = dbCon.GetPokemonsFromDB();
+                pokemons = _pokemonData.GetAllPokemons();
             }
 
             return View(pokemons);
@@ -90,7 +56,7 @@ namespace PokeViewer.Controllers
 
         public IActionResult PokemonDetails(int? id)
         {
-            var pokemon = dbCon.GetPokemonFromDB(id.Value); // nullable int to int conversion
+            var pokemon = _pokemonData.GetPokemon(id.Value); // nullable int to int conversion
 
             return View(pokemon);
         }
